@@ -2,10 +2,9 @@
 import React from "react";
 import Link from "next/link";
 import {
-    MapPin, Home, Shield, Star, Search, Calendar,
-    Users, Filter, ChevronDown, Facebook, Instagram, Twitter
+    MapPin, Home, Shield, Star, Search,
+    Filter, ChevronDown, Facebook, Instagram, Twitter, Users
 } from "lucide-react";
-import "./globals.css";
 
 export default function LandingPage() {
     return (
@@ -39,23 +38,23 @@ export default function LandingPage() {
                 {/* SEARCH BAR */}
                 <div className="relative z-10 bg-white p-5 rounded-2xl flex items-center gap-4 shadow-xl w-11/12 max-w-4xl text-gray-700">
                     <div className="flex-1.5">
-                        <label className="text-xs font-bold mb-1 block">Location</label>
+                        <label className="text-xs font-bold mb-1 block">Search by Name</label>
                         <div className="flex items-center bg-slate-50 p-2 rounded-lg">
                             <Search size={18} className="text-slate-400" />
-                            <input type="text" placeholder="e.g., Kathmandu" className="ml-2 w-full bg-transparent outline-none" />
+                            <input type="text" placeholder="Hotel, Villa, Apartment..." className="ml-2 w-full bg-transparent outline-none" />
                         </div>
                     </div>
                     <div className="flex-1">
-                        <label className="text-xs font-bold mb-1 block">Check-in</label>
-                        <div className="flex justify-between items-center bg-slate-50 p-2 rounded-lg">
-                            <span className="text-slate-400 text-sm">Select Date</span>
-                            <Calendar size={18} className="text-slate-400" />
+                        <label className="text-xs font-bold mb-1 block">Property Type</label>
+                        <div className="flex justify-between items-center bg-slate-50 p-2 rounded-lg cursor-pointer">
+                            <span className="text-slate-600 text-sm">Select Type</span>
+                            <ChevronDown size={18} className="text-slate-400" />
                         </div>
                     </div>
                     <div className="flex-1">
-                        <label className="text-xs font-bold mb-1 block">Guests</label>
-                        <div className="flex justify-between items-center bg-slate-50 p-2 rounded-lg">
-                            <span className="text-sm">2 Guests</span>
+                        <label className="text-xs font-bold mb-1 block">Region</label>
+                        <div className="flex justify-between items-center bg-slate-50 p-2 rounded-lg cursor-pointer">
+                            <span className="text-slate-600 text-sm">Mountains, City, Lake</span>
                             <ChevronDown size={18} className="text-slate-400" />
                         </div>
                     </div>
