@@ -1,26 +1,21 @@
-import fs from "fs";
-import * as admin from "firebase-admin";
+import admin from "firebase-admin";
+import { FIREBASE_SERVICE_ACCOUNT_PATH } from "../config/index";
 
-export function ensureFirebaseAdminInitialized(): boolean {
-  if (admin.apps.length) return true;
+export function ensureFirebaseAdminInitialized() {
+  if (!admin.apps.length) {
+    if (!FIREBASE_SERVICE_ACCOUNT_PATH || FIREBASE_SERVICE_ACCOUNT_PATH === "") {
+      console.log(
+        "⚠️ Firebase Admin not initialized (service account not set). Skipping."
+      );
+      return; // skip initialization
+    }
 
-  const serviceAccountPath = process.env.FIREBASE_SERVICE_ACCOUNT_PATH;
-  const serviceAccountJson = process.env.FIREBASE_SERVICE_ACCOUNT_JSON;
+    admin.initializeApp({
+      credential: admin.credential.cert(
+        require(FIREBASE_SERVICE_ACCOUNT_PATH)
+      ),
+    });
 
-  let serviceAccount: admin.ServiceAccount | null = null;
-
-  if (serviceAccountJson) {
-    serviceAccount = JSON.parse(serviceAccountJson) as admin.ServiceAccount;
-  } else if (serviceAccountPath && fs.existsSync(serviceAccountPath)) {
-    const fileContent = fs.readFileSync(serviceAccountPath, "utf-8");
-    serviceAccount = JSON.parse(fileContent) as admin.ServiceAccount;
+    console.log("✅ Firebase Admin initialized successfully.");
   }
-
-  if (!serviceAccount) return false;
-
-  admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-  });
-
-  return true;
 }

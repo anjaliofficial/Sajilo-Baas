@@ -1,29 +1,7 @@
 import * as admin from "firebase-admin";
-import fs from "fs";
+import { ensureFirebaseAdminInitialized } from "./firebase-admin";
 
-if (!admin.apps.length) {
-  const serviceAccountPath = process.env.FIREBASE_SERVICE_ACCOUNT_PATH;
-  const serviceAccountJson = process.env.FIREBASE_SERVICE_ACCOUNT_JSON;
-
-  let serviceAccount: admin.ServiceAccount | null = null;
-
-  if (serviceAccountJson) {
-    serviceAccount = JSON.parse(serviceAccountJson) as admin.ServiceAccount;
-  } else if (serviceAccountPath && fs.existsSync(serviceAccountPath)) {
-    const fileContent = fs.readFileSync(serviceAccountPath, "utf-8");
-    serviceAccount = JSON.parse(fileContent) as admin.ServiceAccount;
-  }
-
-  if (serviceAccount) {
-    admin.initializeApp({
-      credential: admin.credential.cert(serviceAccount),
-    });
-  } else {
-    console.warn(
-      "Firebase Admin not initialized: set FIREBASE_SERVICE_ACCOUNT_JSON or FIREBASE_SERVICE_ACCOUNT_PATH.",
-    );
-  }
-}
+ensureFirebaseAdminInitialized();
 
 export async function sendPushNotification(
   tokens: string[],
@@ -32,6 +10,7 @@ export async function sendPushNotification(
   data: Record<string, any> = {},
 ): Promise<void> {
   if (!tokens || tokens.length === 0) return;
+  if (!admin.apps.length) return;
 
   try {
     let successCount = 0;
