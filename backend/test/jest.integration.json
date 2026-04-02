@@ -1,0 +1,15 @@
+{
+  "preset": "ts-jest",
+  "testEnvironment": "node",
+  "rootDir": "..",
+  "testMatch": ["<rootDir>/test/integration/**/*.test.ts"],
+  "moduleFileExtensions": ["ts", "js", "json"],
+  "collectCoverage": true,
+  "coverageDirectory": "<rootDir>/coverage/integration",
+  "verbose": true,
+  "testTimeout": 60000,
+  "setupFilesAfterEnv": ["<rootDir>/test/setup/setupTests.ts"]
+}
+
+
+
