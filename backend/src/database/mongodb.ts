@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { MONGODB_URI } from "../config/index"; // Only import, do NOT export again
+import { MONGODB_URI } from "../config/index"; // do NOT export again
 
 export async function connectToDatabase() {
   try {
